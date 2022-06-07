@@ -77,7 +77,6 @@ if '_' not in gamma:
 #check if intersection of sigma and gamma is void
 for symbol in gamma:
     if symbol in sigma:
-        print(symbol)
         exit(f"Ambiguous definition of {symbol}")
 state = start
 i = 0
