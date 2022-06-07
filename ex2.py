@@ -1,8 +1,10 @@
 f = open('config_file.txt', 'r')
 #first tape
-tape1 = [x for x in "000000000000000_"]
+#pune _ la sfarsit de input boule
+tape1 = [x for x in "0110#0110_"]
 #second tape
-tape2 = [x for x in "000000000000000_"]
+#pune _ la sfarsit de input boule
+tape2 = [x for x in "0110#0110_"]
 #head
 i = 0
 #possible moves the head can make
@@ -65,6 +67,13 @@ while line := f.readline():
             #value of delta[arg]
             value = [line[3], line[4], line[5], line[6]] #
             delta[arg] = value
+""" print(states)
+print(sigma)
+print(gamma)
+print(start)
+print(accept)
+print(reject)
+print(delta) """
 #check if there is a start, accept and reject states
 if (not len(start)) or (not len(accept)) or (not len(reject)):
     exit("INVALID CONFIG")
@@ -74,6 +83,7 @@ if '_' not in gamma:
 #check if intersection of sigma and gamma is void
 for symbol in gamma:
     if symbol in sigma:
+        print(symbol)
         exit(f"Ambiguous definition of {symbol}")
 
 
