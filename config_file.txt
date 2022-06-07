@@ -1,0 +1,40 @@
+States:
+q1
+q2
+q3
+q4
+q5
+End
+Sigma:
+0
+End
+Gamma:
+_
+x
+End
+Start:
+q1
+End
+Accept:
+q6
+End
+Reject:
+q7
+End
+Delta:
+q1 _ _ q7 _ _ R
+q1 x x q7 x x R
+q1 0 0 q2 _ _ R
+q2 x x q2 x x R
+q2 _ _ q6 _ _ R
+q2 0 0 q3 x x R
+q3 x x q3 x x R
+q3 _ _ q5 _ _ L
+q3 0 0 q4 0 0 R
+q4 0 0 q3 x x R
+q4 x x q4 x x R
+q4 _ _ q7 _ _ R
+q5 0 0 q5 0 0 L
+q5 x x q5 x x L
+q5 _ _ q2 _ _ R
+End
