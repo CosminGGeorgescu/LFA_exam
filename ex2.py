@@ -16,10 +16,10 @@ sigma = []
 gamma = []
 #start state
 start = ''
-#accept state
-accept = ''
-#reject state
-reject = ''
+#accept states
+accept = []
+#reject states
+reject = []
 #delta function
 delta = {}
 while line := f.readline():
@@ -36,17 +36,19 @@ while line := f.readline():
         start = (line := f.readline())[:len(line) - 1]
         states.append(start)
     elif "Accept" in line:
-        accept = (line := f.readline())[:len(line) - 1]
-        states.append(accept)
+        while "End" not in (line := f.readline()):
+            accept.append(line[:len(line) - 1])
+            states.append(accept[len(accept) - 1])
         #check if the accept state is same as reject one
-        if len(reject) and accept == reject:
-            exit("Accept state same as reject state")
+        if len(reject) and accept[len(accept) - 1] in reject:
+            exit("Accept state can not reject state at the same time")
     elif "Reject" in line:
-        reject = (line := f.readline())[:len(line) - 1]
-        states.append(reject)
+        while "End" not in (line := f.readline()):
+            reject.append(line[:len(line) - 1])
+            states.append(reject[len(reject) - 1])
         #same as 5 lines above
-        if len(accept) and accept == reject:
-            exit("Accept state same as reject state")
+        if len(accept) and reject[len(reject) - 1] in accept:
+            exit("Accept state can not reject state at the same time")
     elif "Delta"in line:
         while "End" not in (line := f.readline()):
             line = line.split(' ')
@@ -79,7 +81,7 @@ for symbol in gamma:
         exit(f"Ambiguous definition of {symbol}")
 state = start
 i = 0
-while state not in [accept, reject]:
+while (state not in accept) and (state not in reject):
     rule = delta[(state, tape1[i], tape2[i])]
     tape1[i] = rule[1]
     tape2[i] = rule[2]
@@ -89,7 +91,7 @@ while state not in [accept, reject]:
     elif rule[3] == 'R':
         i = i + 1
     state = rule[0]
-if state == accept:
+if state in accept:
     exit("Input accepted")
 else:
     exit("Input rejected")
