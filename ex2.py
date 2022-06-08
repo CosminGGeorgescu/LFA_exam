@@ -1,3 +1,9 @@
+"""
+grupa 144
+Georgescu Cosmin Gabriel 
+Tanase Victor Flavian
+Nastase Antonio
+"""
 f = open('config_file_2.txt', 'r')
 input = "_0110#0110_"
 #first tape
@@ -58,15 +64,15 @@ while line := f.readline():
             if (line[0] not in states) or (line[3] not in states):
                 exit("Invalid transition state")
             #check if read and to-be-written symbols are valid
-            if ((line[1] not in sigma) and (line[1] not in gamma)) or ((line[2] not in sigma) and (line[2] not in gamma)) or ((line[4] not in sigma) and (line[4] not in gamma)) or ((line[5] not in sigma) and (line[5] not in gamma)): #   
+            if ((line[1] not in sigma) and (line[1] not in gamma)) or ((line[2] not in sigma) and (line[2] not in gamma)) or ((line[4] not in sigma) and (line[4] not in gamma)) or ((line[5] not in sigma) and (line[5] not in gamma)): 
                 exit("Invalid transition symbols")
             #check if indicated move is valid
             if line[6] not in moves:
                 exit("Invalid move")
             #argument of delta function
-            arg = (line[0], line[1], line[2]) #
+            arg = (line[0], line[1], line[2])
             #value of delta[arg]
-            value = [line[3], line[4], line[5], line[6]] #
+            value = [line[3], line[4], line[5], line[6]]
             delta[arg] = value
 #check if there is a start, accept and reject states
 if (not len(start)) or (not len(accept)) or (not len(reject)):
@@ -78,18 +84,24 @@ if '_' not in gamma:
 for symbol in gamma:
     if symbol in sigma:
         exit(f"Ambiguous definition of {symbol}")
+#start from the start state with the head on the left-most square
 state = start
 i = 0
 while (state not in accept) and (state not in reject):
+    #rule tells us in which state to transition and what to write on the tapes respectevly
     rule = delta[(state, tape1[i], tape2[i])]
     tape1[i] = rule[1]
     tape2[i] = rule[2]
     if rule[3] == 'L':
+        #if on the left-most square and indicated move is left retain position
         if i != 0:
             i = i - 1
     elif rule[3] == 'R':
+        #tapes are infinitely long, there is no upper-bound
         i = i + 1
+    #make the transition
     state = rule[0]
+print(f"Final state: {state}")
 if state in accept:
     exit("Input accepted")
 else:
