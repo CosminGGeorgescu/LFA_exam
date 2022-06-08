@@ -1,3 +1,9 @@
+"""
+grupa 144
+Georgescu Cosmin Gabriel 
+Tanase Victor Flavian
+Nastase Antonio
+"""
 f = open('config_file_3.txt', 'r')
 input = "_0110#0110_"
 #first tape
@@ -78,17 +84,22 @@ if '_' not in gamma:
 for symbol in gamma:
     if symbol in sigma:
         exit(f"Ambiguous definition of {symbol}")
+#start from the start state with the head on the left-most square
 state = start
 i = 0
 while (state not in accept) and (state not in reject):
+    #rule tells us in which state to transition and what to write on the tapes respectevly
     rule = delta[(state, tape1[i], tape2[i])]
     tape1[i] = rule[1]
     tape2[i] = rule[2]
     if rule[3] == 'L':
+        #if on the left-most square and indicated move is left retain position
         if i != 0:
             i = i - 1
     elif rule[3] == 'R':
+        #tapes are infinitely long, there is no upper-bound
         i = i + 1
+    #make the transition
     state = rule[0]
 if state in accept:
     exit("Input uncorrupted")
