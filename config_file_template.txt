@@ -1,0 +1,34 @@
+States:
+<state>
+<state>
+...
+End
+Sigma:
+<symbol>
+<symbol>
+...
+End
+Gamma:
+_
+<symbol>
+<symbol>
+...
+End
+Start:
+<state>
+End
+Accept:
+<state>
+<state>
+...
+End
+Reject:
+<state>
+<state>
+...
+End
+Delta:
+<state> <symbol> <symbol> <state> <symbol> <symbol> <move>
+<state> <symbol> <symbol> <state> <symbol> <symbol> <move>
+...
+End 
